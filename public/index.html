@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>Ping Identity Fuji</title>
+<script type="text/javascript" src="jquery-3.1.1.min.js"></script> 
+<script type="text/javascript" src="jquery-latest.js"></script> 
+<script type="text/javascript" src="jquery.tablesorter.js"></script>
+<script type="text/javascript" src="jquery.validate.min.js"></script>
+<script type="text/javascript" src="ajax.js"></script>
+<link rel="stylesheet" href="theme.blue.css">
+<link rel="stylesheet" href="jq.css">
+<script id="js">
+$(document).ready(function(){
+    jQuery.support.cors = true;
+    $.ajax(
+    {
+        type: "GET",
+        url: 'persons/',
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+	        var trHTML = '';
+	        $.each(data, function (i, item) {
+	            trHTML += '<tr><td>' + data[i].firstName + '</td><td>' + data[i].lastName + '</td><td>' + data[i].age + '</td><td>' + data[i].height + '</td></tr>';
+	        });
+	
+	        $('table#persontable').append(trHTML);
+	        $("table#persontable").trigger("update");
+        },
+
+        error: function (msg) {
+
+            alert(msg.responseText);
+        }
+    });
+});
+$(function(){
+	$("table").tablesorter({
+		theme : 'blue',
+
+		// default sortInitialOrder setting
+		sortInitialOrder: "asc",
+
+		// pass the headers argument and passing a object
+		headers: {
+			// set initial sort order by column, this headers option setting overrides the sortInitialOrder option
+			0: { sortInitialOrder: 'desc' }
+		}
+
+	});
+});
+
+
+//rfsdsfdfdsf
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+$(function() { // on document load
+/* 	$('#person_Form').validate({ // initialize the plugin
+        rules: {
+            age: {
+                required: true,
+                integer: true
+            },
+            height: {
+                required: true,
+                integer: true
+            }
+        }}); */
+	$('#person_Form').submit(function(e) { // set onsubmit event to the form
+	var data = JSON.stringify($('form').serializeObject());
+
+	$.ajax({
+	    url: 'person/', // php script to retern json encoded string
+	    data: data,  // serialized data to send on server
+	    dataType:'json', // set recieving type - JSON in case of a question
+	    type:'post', // set sending HTTP Request type
+	    contentType:'application/json',
+	    async:false, 
+	    success: function(data) { // callback method for further manipulations  
+	    	 document.location = 'index.html';
+	    },
+	    error: function(data) { // if error occured
+
+	    }
+	  });
+	  return false;
+	});
+	});
+</script>
+</head>
+<body>
+
+	<h1>Ping Identity Fuji Test</h1>
+
+	<!-- <p>Good Luck!</p>
+	<ul>
+		<li><a href="/goodluck">Good Luck</a>.
+		<li><a href="/createPerson.html">Add</a>.
+	</ul> -->
+
+	<table id="persontable" class="tablesorter-blue">
+		<thead>
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Age</th>
+			<th>Height</th>
+		</tr>
+	</thead>
+		<tbody id="tbody">
+		</tbody>
+	</table>
+	
+
+	<button>Add</button>
+		<div id="addformdiv" style="display: none;">
+			<form id="person_Form" method="post">
+				FirstName: <input type="text" id="firstName" name="firstName"/>
+				LastName: <input type="text" name="lastName"/>
+				Age: <input type="text" name="age"/>
+				Height: <input type="text" name="height"/>
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+		<script>
+		$( "button" ).click(function() {
+		  $( "#addformdiv" ).toggle();
+		});
+		</script>
+	
+</body>
+</html>

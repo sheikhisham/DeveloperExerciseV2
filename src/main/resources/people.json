@@ -1,0 +1,22 @@
+{
+    "people": [
+        {
+            "firstName": "Jason",
+            "lastName": "Doe",
+            "age": "49",
+            "height": "69"
+        },
+        {
+            "firstName": "John",
+            "lastName": "MacDonald",
+            "age": "34",
+            "height": "67"
+        },
+        {
+            "firstName": "Madeleine",
+            "lastName": "Murray",
+            "age": "33",
+            "height": "65"
+        }
+    ]
+}

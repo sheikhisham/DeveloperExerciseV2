@@ -1,0 +1,54 @@
+Ping Identity Interview: Take Home Coding Exercise
+Engineer Level Exercise
+
+System Requirements
+-------------------------------------------------------------------------------
+-Java 1.6, 1.7 or 1.8
+-Maven 3.x
+
+Package Contents
+-------------------------------------------------------------------------------
+-This README file
+-A pom.xml file (for Maven)
+-A src directory with java source files
+-A public directory with static web content
+
+The Exercise
+-------------------------------------------------------------------------------
+Imagine that you are implementing a web application that needs to gather data 
+from multiple sources and display it to a customer. In this exercise, the
+objects are groups of People, with 4 attributes: first name, last name, age,
+and height. There are two sources of data, found in src/main/resources in the
+project (people.txt, people.json). You must read in the data from both files,
+combine it, and display in on a web page. 
+
+The data must be sortable in ascending/descending order by each attribute from the
+controls on the web application. The customer also wants to be able to add a new 
+person. Please see public/fuji_interface.pdf for a sample screen mock.
+
+Please note, this exercise is left deliberately vague. 
+Feel free to implement the requirements as you best see fit.
+
+Key Requirements/Givens:
+-------------------------------------------------------------------------------
+* Application should work without page refreshes.
+* Data must be read in from the files provided. Added users do not need to be saved to disk 
+(but should be stored in memory server side).
+* Web application must consume a server side rest api via the provided controller.
+
+* 3rd Party libraries are allowed. Be prepared to explain why/how they are used.
+* Unit tests can be added.
+* Code should be commented appropriately.
+* Alternative build approaches can be used (Ant, Gradle etc).
+
+Building the project
+-------------------------------------------------------------------------------
+To build the project, perfom a mvn clean package from the root directory, where
+the pom.xml is located. To run the web app, perform mvn spring-boot:run. This will
+start a web-app on localhost:8080. You can see the sample index.html at
+localhost:8080/index.html. You will notice that the "Good Luck" link is hooked to 
+Controller.java. There is lots of documentation online for Spring Boot / MVC 
+web applications, if you run into trouble. 
+
+Please return your implementation (or whole package) prior to the provided
+deadline.

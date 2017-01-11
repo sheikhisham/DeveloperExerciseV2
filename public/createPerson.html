@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Create Person</title>
+<script type="text/javascript" src="jquery-latest.js"></script> 
+<script type="text/javascript" src="jquery.serializeJSON.js"></script>
+<script>
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+$(function() { // on document load
+	$('#person_Form').submit(function(e) { // set onsubmit event to the form
+	var data = JSON.stringify($('form').serializeObject());
+
+	$.ajax({
+	    url: 'person/', // php script to retern json encoded string
+	    data: data,  // serialized data to send on server
+	    dataType:'json', // set recieving type - JSON in case of a question
+	    type:'post', // set sending HTTP Request type
+	    contentType:'application/json',
+	    async:false, 
+	    success: function(data) { // callback method for further manipulations  
+	    	 document.location = 'index.html';
+	    },
+	    error: function(data) { // if error occured
+
+	    }
+	  });
+	  return false;
+	});
+	});
+</script>
+</head>
+<body>
+	<form id="person_Form" method="post">
+		FirstName: <input type="text" id="firstName" name="firstName"/>
+		LastName: <input type="text" name="lastName"/>
+		Age: <input type="text" name="age"/>
+		Height: <input type="text" name="height"/>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
